@@ -1,29 +1,35 @@
 //jshint esversion:6
 
-mport express, { static } from "express";
-import { urlencoded } from "body-parser";
-const date = require(__dirname + "/date.js"); // Custom module to get the current date //
+import express from 'express';
+import bodyParser from 'body-parser';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { getDate } from './date.js'; // Correctly import the getDate function
 
-// Initialize the Express app //
+// Initialize the Express app
 const app = express();
 
-// Set the view engine to EJS for templating //
+// Set the view engine to EJS for templating
 app.set('view engine', 'ejs');
 
-// Use body-parser to parse URL-encoded bodies (form data) //
-app.use(urlencoded({ extended: true }));
+// Use body-parser to parse URL-encoded bodies (form data)
+app.use(bodyParser.urlencoded({ extended: true }));
 
-// Serve static files from the "public" directory //
-app.use(static("public"));
+// Serve static files from the "public" directory
+app.use(express.static("public"));
 
-// Initialize arrays to store items //
+// Initialize arrays to store items
 const items = ["Buy Food", "Cook Food", "Eat Food"];
 const workItems = [];
 
-// Handle GET request for the home route //
+// Get the directory name for ES6 modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Handle GET request for the home route
 app.get("/", function (req, res) {
     // Get the current date using the custom date module
-    const day = date.getDate();
+    const day = getDate();
 
     // Debugging: Log the current date
     console.log("Home Route - Current Date: ", day);
@@ -51,25 +57,25 @@ app.post("/", function (req, res) {
     }
 });
 
-// Handle GET request for the work route //
+// Handle GET request for the work route
 app.get("/work", function (req, res) {
-    // Debugging: Log the current work items //
+    // Debugging: Log the current work items
     console.log("Work Route - Current Work Items: ", workItems);
 
-    // Render the "list" EJS template with the work list items //
+    // Render the "list" EJS template with the work list items
     res.render("list", { listTitle: "Work List", newListItems: workItems, routeName: "work" });
 });
 
 // Handle GET request for the about route
 app.get("/about", function (req, res) {
-    // Debugging: Log access to the about route //
+    // Debugging: Log access to the about route
     console.log("About Route Accessed");
 
-    // Render the "list" EJS template with about page content//
+    // Render the "list" EJS template with about page content
     res.render("list", { listTitle: "About", newListItems: [], routeName: "about" });
 });
 
-
+// Start the server on port 3000
 app.listen(3000, function () {
     console.log("Server started on port 3000");
 });
