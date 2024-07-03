@@ -1,23 +1,22 @@
 //jshint esversion:6
 
-// Import required modules
-const express = require("express");
-const bodyParser = require("body-parser");
-const date = require(__dirname + "/date.js"); // Custom module to get the current date
+mport express, { static } from "express";
+import { urlencoded } from "body-parser";
+const date = require(__dirname + "/date.js"); // Custom module to get the current date //
 
-// Initialize the Express app
+// Initialize the Express app //
 const app = express();
 
-// Set the view engine to EJS for templating
+// Set the view engine to EJS for templating //
 app.set('view engine', 'ejs');
 
-// Use body-parser to parse URL-encoded bodies (form data)
-app.use(bodyParser.urlencoded({ extended: true }));
+// Use body-parser to parse URL-encoded bodies (form data) //
+app.use(urlencoded({ extended: true }));
 
-// Serve static files from the "public" directory
-app.use(express.static("public"));
+// Serve static files from the "public" directory //
+app.use(static("public"));
 
-// Initialize arrays to store items
+// Initialize arrays to store items //
 const items = ["Buy Food", "Cook Food", "Eat Food"];
 const workItems = [];
 
@@ -52,12 +51,12 @@ app.post("/", function (req, res) {
     }
 });
 
-// Handle GET request for the work route
+// Handle GET request for the work route //
 app.get("/work", function (req, res) {
-    // Debugging: Log the current work items
+    // Debugging: Log the current work items //
     console.log("Work Route - Current Work Items: ", workItems);
 
-    // Render the "list" EJS template with the work list items
+    // Render the "list" EJS template with the work list items //
     res.render("list", { listTitle: "Work List", newListItems: workItems, routeName: "work" });
 });
 
@@ -74,3 +73,4 @@ app.get("/about", function (req, res) {
 app.listen(3000, function () {
     console.log("Server started on port 3000");
 });
+
