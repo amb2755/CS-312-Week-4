@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
@@ -10,15 +9,15 @@
     <div class="box" id="heading">
         <h1><%= listTitle %></h1>
     </div>
-    
+
     <% if (routeName === "home" || routeName === "work") { %>
         <div class="box">
-            <% for (let i = 0; i < newListItems.length; i++) { %>
+            <% newListItems.forEach(function(item) { %>
                 <div class="item">
                     <input type="checkbox">
-                    <p><%= newListItems[i] %></p>
+                    <p><%= item.name %></p>
                 </div>
-            <% } %>
+            <% }); %>
         </div>
         <form class="" action="/" method="post">
             <input type="text" name="newItem" placeholder="New Item" autocomplete="off" required>
@@ -26,6 +25,7 @@
         </form>
     <% } else if (routeName === "about") { %>
         <div class="box">
+            <h1>About</h1>
             <p>This is a simple To-Do List application built with Node.js, Express, and EJS.</p>
         </div>
     <% } %>
