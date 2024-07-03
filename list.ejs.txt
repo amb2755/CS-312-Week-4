@@ -1,0 +1,39 @@
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="utf-8">
+    <title><%= listTitle %></title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <div class="box" id="heading">
+        <h1><%= listTitle %></h1>
+    </div>
+    
+    <% if (routeName === "home" || routeName === "work") { %>
+        <div class="box">
+            <% for (let i = 0; i < newListItems.length; i++) { %>
+                <div class="item">
+                    <input type="checkbox">
+                    <p><%= newListItems[i] %></p>
+                </div>
+            <% } %>
+        </div>
+        <form class="" action="/" method="post">
+            <input type="text" name="newItem" placeholder="New Item" autocomplete="off" required>
+            <button type="submit">+</button>
+        </form>
+    <% } else if (routeName === "about") { %>
+        <div class="box">
+            <p>This is a simple To-Do List application built with Node.js, Express, and EJS.</p>
+        </div>
+    <% } %>
+
+    <footer>
+        <a href="/">Home</a> | 
+        <a href="/work">Work</a> | 
+        <a href="/about">About</a>
+    </footer>
+</body>
+</html>
